@@ -5,4 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <!-- 键盘按钮样式 -->
+    <style name="layout_ime_keyboard_button">
+        <!-- TODO: 添加（背景等）样式 -->
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@null</item>
+    </style>
 </resources>
