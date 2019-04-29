@@ -93,7 +93,7 @@ public class Dictionary {
 						result.append(match.word);
 					} else {
 						// 否则，放入对应的英文
-						result.append(inputString.substring(i - offset, i - 1));
+						result.append(inputString.substring(i - offset, i));
 					}
 					// 清除缓存
 					string = null;
@@ -117,7 +117,7 @@ public class Dictionary {
 				result.append(match.word);
 			} else {
 				// 否则，放入英文
-				result.append(inputString.substring(len - offset));
+				result.append(inputString.substring(len - offset - 1));
 			}
 		}
 		return result.toString();

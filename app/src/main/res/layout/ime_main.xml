@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- TODO: 工具栏 -->
+    <!-- 工具栏 -->
+    <include layout="@layout/ime_toolbar" />
 
     <!-- 键盘 -->
-    <include layout="@layout/ime_keyboard"/>
+    <include layout="@layout/ime_keyboard" />
 
 </LinearLayout>

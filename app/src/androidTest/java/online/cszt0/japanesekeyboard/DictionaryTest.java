@@ -32,10 +32,18 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void parseInput() {
-		final String[][] testList = {{"kukuasyu", "くくあしゅ"}, {"aaa", "あああ"}, {"aiueo", "あいうえお"}, {"kakiku", "かきく"},
+		final String[][] testList = {
+				// 随意打的可以打出字的用例
+				{"kukuasyu", "くくあしゅ"}, {"aaa", "あああ"}, {"aiueo", "あいうえお"}, {"kakiku", "かきく"},
 				{"maaosaonimasao", "まあおさおにまさお"},
 				// 这里打出的实际上是 “さおだおぃぁみ”，但此处不考虑“ぃぁ”这种，而是照原样打出
 				{"saodaoxilami", "さおだおxいlあみ"},
+				// 乱码应该照常输出
+				{"lmzxwq", "lmzxwq"},
+				// 单字符
+				{"m", "m"}, {"v", "v"},
+				// 未正常结尾
+				{"kumam", "くまm"},
 				// 下面的是有意义的句子
 				// 欢迎光临
 				{"youkoso", "ようこそ"},
