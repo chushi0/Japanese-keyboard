@@ -23,9 +23,10 @@ public class IMEService extends InputMethodService {
 	public void onCreate() {
 		super.onCreate();
 
+		View candidates = getLayoutInflater().inflate(R.layout.ime_input, null);
 		View view = getLayoutInflater().inflate(R.layout.ime_main, null);
 		// findViewsById
-		input = view.findViewById(R.id.input);
+		input = candidates.findViewById(R.id.input);
 		candidate = view.findViewById(R.id.candidate);
 		candidate.setOnClickListener(v -> {
 			String text = candidate.getText().toString();
@@ -46,6 +47,7 @@ public class IMEService extends InputMethodService {
 			input.append(text);
 			candidate.setText(Dictionary.parseHiragana(input.getText().toString()));
 			enterButton.setText("×");
+			setCandidatesViewShown(true);
 		};
 		for (int i = 0; i < 26; i++) {
 			char c = (char) ('a' + i);
@@ -91,5 +93,6 @@ public class IMEService extends InputMethodService {
 		});
 
 		setInputView(view);
+		setCandidatesView(candidates);
 	}
 }
