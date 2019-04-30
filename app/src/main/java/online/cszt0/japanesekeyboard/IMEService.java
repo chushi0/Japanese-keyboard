@@ -20,14 +20,18 @@ public class IMEService extends InputMethodService {
 	private Button deleteButton;
 	private Button spaceButton;
 	private Button enterButton;
+	private Button commaButton;
+	private Button periodButton;
 
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
-		@SuppressLint("InflateParams") View candidates = getLayoutInflater().inflate(R.layout.ime_input, null);
-		@SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.ime_main, null);
+		@SuppressLint("InflateParams")
+		View candidates = getLayoutInflater().inflate(R.layout.ime_input, null);
+		@SuppressLint("InflateParams")
+		View view = getLayoutInflater().inflate(R.layout.ime_main, null);
 		// findViewsById
 		View.OnTouchListener keyTouchMode = new View.OnTouchListener() {
 			private void run(View v) {
@@ -109,7 +113,8 @@ public class IMEService extends InputMethodService {
 		spaceButton.setOnClickListener(v -> {
 			String text = candidate.getText().toString();
 			if (text.isEmpty()) {
-				sendKeyChar(' ');
+				// 日文全角空格
+				sendKeyChar('　');
 			} else {
 				candidate.performClick();
 			}
@@ -123,6 +128,23 @@ public class IMEService extends InputMethodService {
 				candidate.setText(null);
 				enterButton.setText("┘");
 			}
+		});
+		commaButton = view.findViewById(R.id.key_comma);
+		commaButton.setOnTouchListener(keyTouchMode);
+		commaButton.setOnClickListener(v -> {
+			if (input.getText().length() > 0) {
+				candidate.performClick();
+			}
+			// 日文中逗号输入的不是“，”，而是“、”
+			sendKeyChar('、');
+		});
+		periodButton = view.findViewById(R.id.key_period);
+		periodButton.setOnTouchListener(keyTouchMode);
+		periodButton.setOnClickListener(v -> {
+			if (input.getText().length() > 0) {
+				candidate.performClick();
+			}
+			sendKeyChar('。');
 		});
 
 		setInputView(view);

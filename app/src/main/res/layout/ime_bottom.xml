@@ -19,6 +19,7 @@
         android:text="符" />
 
     <Button
+        android:id="@+id/key_comma"
         style="@style/layout_ime_keyboard_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
         android:text="-" />
 
     <Button
+        android:id="@+id/key_period"
         style="@style/layout_ime_keyboard_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
