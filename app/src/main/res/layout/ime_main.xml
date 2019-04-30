@@ -10,4 +10,7 @@
     <!-- 键盘 -->
     <include layout="@layout/ime_keyboard" />
 
+    <!-- 底部功能 -->
+    <include layout="@layout/ime_bottom"/>
+
 </LinearLayout>
