@@ -68,10 +68,7 @@ public class IMEService extends InputMethodService {
 		candidate.setOnClickListener(v -> {
 			String text = candidate.getText().toString();
 			if (!text.isEmpty()) {
-				char[] chars = text.toCharArray();
-				for (char c : chars) {
-					sendKeyChar(c);
-				}
+				getCurrentInputConnection().commitText(text, text.length());
 				input.setText(null);
 				candidate.setText(null);
 				enterButton.setText("┘");
