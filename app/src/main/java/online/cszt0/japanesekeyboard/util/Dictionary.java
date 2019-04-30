@@ -13,12 +13,15 @@ import android.util.Log;
 import online.cszt0.japanesekeyboard.BuildConfig;
 
 public class Dictionary {
+	// 平假
 	private static Word[] HIRAGANA;
+	// 片假
+	private static Word[] KATAKANA;
 
 	public static void init(Context context) {
-		// TODO: read from assets
 		AssetManager assetManager = context.getAssets();
 		HIRAGANA = readFromAssets(assetManager, "hiragana");
+		KATAKANA = readFromAssets(assetManager, "katakana");
 	}
 
 	private static Word[] readFromAssets(AssetManager assetManager, String name) {
@@ -45,6 +48,14 @@ public class Dictionary {
 	}
 
 	public static String parseHiragana(String inputString) {
+		return parseByDictionary(inputString, HIRAGANA);
+	}
+
+	public static String parseKatakana(String inputString) {
+		return parseByDictionary(inputString, KATAKANA);
+	}
+
+	private static String parseByDictionary(String inputString, Word[] words) {
 		char[] input = inputString.toCharArray();
 		StringBuilder result = new StringBuilder();
 		ArrayList<Word> string = null;
@@ -56,7 +67,7 @@ public class Dictionary {
 				string = new ArrayList<>();
 				offset = 0;
 				// 搜索以字符 c 开头的字
-				for (Word word : HIRAGANA) {
+				for (Word word : words) {
 					if (word.input[0] == c) {
 						string.add(word);
 					}
@@ -107,7 +118,7 @@ public class Dictionary {
 			// 检查完全匹配
 			Word match = null;
 			for (Word word : string) {
-				if (word.input.length == offset+1) {
+				if (word.input.length == offset + 1) {
 					match = word;
 					break;
 				}

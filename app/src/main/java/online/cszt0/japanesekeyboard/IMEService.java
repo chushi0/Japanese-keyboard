@@ -17,11 +17,14 @@ public class IMEService extends InputMethodService {
 	private TextView candidate;
 
 	private Button[] alphabetKey;
+	private Button capslockButton;
 	private Button deleteButton;
 	private Button spaceButton;
 	private Button enterButton;
 	private Button commaButton;
 	private Button periodButton;
+
+	private InputMode inputMode = InputMode.HIRAGANA;
 
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
@@ -79,7 +82,7 @@ public class IMEService extends InputMethodService {
 			Button button = (Button) v;
 			String text = button.getText().toString().toLowerCase();
 			input.append(text);
-			candidate.setText(Dictionary.parseHiragana(input.getText().toString()));
+			updateCandidate();
 			enterButton.setText("×");
 			setCandidatesViewShown(true);
 		};
@@ -91,6 +94,11 @@ public class IMEService extends InputMethodService {
 			alphabetKey[i].setOnTouchListener(keyTouchMode);
 			alphabetKey[i].setOnClickListener(alphabetKeyListener);
 		}
+		capslockButton = view.findViewById(R.id.key_capslock);
+		capslockButton.setOnClickListener(v -> {
+			inputMode = inputMode.next();
+			updateCandidate();
+		});
 		deleteButton = view.findViewById(R.id.key_del);
 		deleteButton.setOnTouchListener(keyTouchMode);
 		deleteButton.setOnClickListener(v -> {
@@ -104,7 +112,7 @@ public class IMEService extends InputMethodService {
 					candidate.setText(null);
 					enterButton.setText("┘");
 				} else {
-					candidate.setText(Dictionary.parseHiragana(text));
+					updateCandidate();
 				}
 			}
 		});
@@ -149,5 +157,36 @@ public class IMEService extends InputMethodService {
 
 		setInputView(view);
 		setCandidatesView(candidates);
+	}
+
+	/**
+	 * 更新候选字文本
+	 */
+	private void updateCandidate() {
+		switch (inputMode) {
+			case HIRAGANA :
+				candidate.setText(Dictionary.parseHiragana(input.getText().toString()));
+				capslockButton.setText("平假");
+				break;
+			case KATAKANA :
+				candidate.setText(Dictionary.parseKatakana(input.getText().toString()));
+				capslockButton.setText("片假");
+				break;
+		}
+	}
+
+	private enum InputMode {
+		HIRAGANA, KATAKANA;
+
+		InputMode next() {
+			int size = values().length;
+			int id = ordinal();
+			id += 1;
+			if (size == id) {
+				return values()[0];
+			} else {
+				return values()[id];
+			}
+		}
 	}
 }

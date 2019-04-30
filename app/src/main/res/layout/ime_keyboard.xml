@@ -193,7 +193,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:visibility="invisible" />
+            android:text="平假"
+            android:id="@+id/key_capslock"/>
 
         <Button
             android:id="@+id/key_z"
