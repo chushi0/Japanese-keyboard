@@ -10,6 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#444"
+        android:ellipsize="start"
+        android:singleLine="true"
         android:textColor="#fff" />
 
 
@@ -18,8 +20,9 @@
         android:id="@+id/candidate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="start"
         android:padding="8dp"
-        android:textSize="36sp"
-        android:ellipsize="start"/>
+        android:singleLine="true"
+        android:textSize="36sp" />
 
 </LinearLayout>
