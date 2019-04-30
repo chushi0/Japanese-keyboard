@@ -1,7 +1,9 @@
 package online.cszt0.japanesekeyboard;
 
+import android.annotation.SuppressLint;
 import android.inputmethodservice.InputMethodService;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,13 +21,41 @@ public class IMEService extends InputMethodService {
 	private Button spaceButton;
 	private Button enterButton;
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
-		View candidates = getLayoutInflater().inflate(R.layout.ime_input, null);
-		View view = getLayoutInflater().inflate(R.layout.ime_main, null);
+		@SuppressLint("InflateParams") View candidates = getLayoutInflater().inflate(R.layout.ime_input, null);
+		@SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.ime_main, null);
 		// findViewsById
+		View.OnTouchListener keyTouchMode = new View.OnTouchListener() {
+			private void run(View v) {
+				if (v.getTag() != null) {
+					v.performClick();
+					Runnable task = () -> run(v);
+					v.setTag(task);
+					v.postDelayed(task, 20);
+				}
+			}
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction();
+				if (action == MotionEvent.ACTION_DOWN) {
+					v.performClick();
+					v.setPressed(true);
+					Runnable task = () -> run(v);
+					v.setTag(task);
+					v.postDelayed(task, 500);
+				} else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+					v.setPressed(false);
+					v.removeCallbacks((Runnable) v.getTag());
+					v.setTag(null);
+				}
+				return true;
+			}
+		};
 		input = candidates.findViewById(R.id.input);
 		candidate = view.findViewById(R.id.candidate);
 		candidate.setOnClickListener(v -> {
@@ -54,9 +84,11 @@ public class IMEService extends InputMethodService {
 			String idName = "key_" + c;
 			int id = UiUtils.getResourcesIdByName(idName);
 			alphabetKey[i] = view.findViewById(id);
+			alphabetKey[i].setOnTouchListener(keyTouchMode);
 			alphabetKey[i].setOnClickListener(alphabetKeyListener);
 		}
 		deleteButton = view.findViewById(R.id.key_del);
+		deleteButton.setOnTouchListener(keyTouchMode);
 		deleteButton.setOnClickListener(v -> {
 			if (input.getText().length() == 0) {
 				sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
@@ -73,6 +105,7 @@ public class IMEService extends InputMethodService {
 			}
 		});
 		spaceButton = view.findViewById(R.id.key_space);
+		spaceButton.setOnTouchListener(keyTouchMode);
 		spaceButton.setOnClickListener(v -> {
 			String text = candidate.getText().toString();
 			if (text.isEmpty()) {
