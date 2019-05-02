@@ -10,15 +10,26 @@ import android.widget.TextView;
 
 import online.cszt0.japanesekeyboard.util.Dictionary;
 import online.cszt0.japanesekeyboard.util.UiUtils;
+import online.cszt0.japanesekeyboard.view.StackLayout;
 
 public class IMEService extends InputMethodService {
 
 	private TextView input;
 	private TextView candidate;
 
+	private StackLayout keyboardLayout;
+	private StackLayout bottomLayout;
+
+	// keyboard - main
 	private Button[] alphabetKey;
 	private Button capslockButton;
 	private Button deleteButton;
+
+	// keyboard - num
+	private Button numBackButton;
+
+	// bottom
+	private Button numberlockButton;
 	private Button spaceButton;
 	private Button enterButton;
 	private Button commaButton;
@@ -36,6 +47,8 @@ public class IMEService extends InputMethodService {
 		@SuppressLint("InflateParams")
 		View view = getLayoutInflater().inflate(R.layout.ime_main, null);
 		// findViewsById
+		keyboardLayout = view.findViewById(R.id.keyboard_layout);
+		bottomLayout = view.findViewById(R.id.bottom_layout);
 		View.OnTouchListener keyTouchMode = new View.OnTouchListener() {
 			private void run(View v) {
 				if (v.getTag() != null) {
@@ -112,6 +125,21 @@ public class IMEService extends InputMethodService {
 					updateCandidate();
 				}
 			}
+		});
+		numBackButton = view.findViewById(R.id.key_num_back);
+		numBackButton.setOnClickListener(v -> {
+			// 转为主键盘
+			bottomLayout.setVisibility(View.VISIBLE);
+			keyboardLayout.pop();
+		});
+		numberlockButton = view.findViewById(R.id.key_numlock);
+		numberlockButton.setOnClickListener(v -> {
+			input.setText(null);
+			candidate.setText(null);
+			enterButton.setText("┘");
+			// 转换为数字键盘
+			bottomLayout.setVisibility(View.GONE);
+			keyboardLayout.push(1);
 		});
 		spaceButton = view.findViewById(R.id.key_space);
 		spaceButton.setOnTouchListener(keyTouchMode);

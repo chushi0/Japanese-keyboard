@@ -2,16 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#87dfd5">
+    android:background="#87dfd5"
+    android:orientation="vertical">
 
     <!-- 工具栏 -->
     <include layout="@layout/ime_toolbar" />
 
     <!-- 键盘 -->
-    <include layout="@layout/ime_keyboard" />
+    <online.cszt0.japanesekeyboard.view.StackLayout
+        android:id="@+id/keyboard_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/ime_keyboard_main" />
+
+        <include layout="@layout/ime_keyboard_number" />
+    </online.cszt0.japanesekeyboard.view.StackLayout>
 
     <!-- 底部功能 -->
-    <include layout="@layout/ime_bottom"/>
+    <online.cszt0.japanesekeyboard.view.StackLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/ime_bottom" />
+    </online.cszt0.japanesekeyboard.view.StackLayout>
 
 </LinearLayout>

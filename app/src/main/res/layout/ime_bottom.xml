@@ -5,6 +5,7 @@
     android:orientation="horizontal">
 
     <Button
+        android:id="@+id/key_numlock"
         style="@style/layout_ime_keyboard_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
