@@ -5,43 +5,41 @@
     android:orientation="horizontal">
 
     <!-- 左侧符号 -->
-    <ScrollView
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/key_num_plus"
+            style="@style/layout_ime_keyboard_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="+" />
 
-            <Button
-                style="@style/layout_ime_keyboard_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="+" />
+        <Button
+            android:id="@+id/key_num_subtract"
+            style="@style/layout_ime_keyboard_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-" />
 
-            <Button
-                style="@style/layout_ime_keyboard_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="-" />
+        <Button
+            android:id="@+id/key_num_multiply"
+            style="@style/layout_ime_keyboard_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="*" />
 
-            <Button
-                style="@style/layout_ime_keyboard_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="*" />
+        <Button
+            android:id="@+id/key_num_divide"
+            style="@style/layout_ime_keyboard_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="/" />
 
-            <Button
-                style="@style/layout_ime_keyboard_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="/" />
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
     <!-- 数字键 -->
     <LinearLayout
@@ -57,6 +55,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/key_num_1"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -64,6 +63,7 @@
                 android:text="1" />
 
             <Button
+                android:id="@+id/key_num_2"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,6 +71,7 @@
                 android:text="2" />
 
             <Button
+                android:id="@+id/key_num_3"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -85,6 +86,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/key_num_4"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -92,6 +94,7 @@
                 android:text="4" />
 
             <Button
+                android:id="@+id/key_num_5"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -99,6 +102,7 @@
                 android:text="5" />
 
             <Button
+                android:id="@+id/key_num_6"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -113,6 +117,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/key_num_7"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -120,6 +125,7 @@
                 android:text="7" />
 
             <Button
+                android:id="@+id/key_num_8"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -127,6 +133,7 @@
                 android:text="8" />
 
             <Button
+                android:id="@+id/key_num_9"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -141,13 +148,15 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/key_num_comma"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="，" />
+                android:text="," />
 
             <Button
+                android:id="@+id/key_num_0"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -155,16 +164,16 @@
                 android:text="0" />
 
             <Button
+                android:id="@+id/key_num_period"
                 style="@style/layout_ime_keyboard_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="。" />
+                android:text="." />
         </LinearLayout>
     </LinearLayout>
 
     <!-- 右侧工具 -->
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -172,6 +181,7 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/key_num_del"
             style="@style/layout_ime_keyboard_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -179,13 +189,15 @@
             android:text="←" />
 
         <Button
+            android:id="@+id/key_num_space"
             style="@style/layout_ime_keyboard_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="_" />
 
         <Button
+            android:id="@+id/key_num_enter"
             style="@style/layout_ime_keyboard_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -193,12 +205,12 @@
             android:text="┘" />
 
         <Button
+            android:id="@+id/key_num_back"
             style="@style/layout_ime_keyboard_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="×"
-            android:id="@+id/key_num_back"/>
+            android:text="×" />
 
     </LinearLayout>
 </LinearLayout>
