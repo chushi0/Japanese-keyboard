@@ -46,7 +46,7 @@ public class IMEService extends InputMethodService {
 		View candidates = getLayoutInflater().inflate(R.layout.ime_input, null);
 		@SuppressLint("InflateParams")
 		View view = getLayoutInflater().inflate(R.layout.ime_main, null);
-		// findViewsById
+		
 		keyboardLayout = view.findViewById(R.id.keyboard_layout);
 		bottomLayout = view.findViewById(R.id.bottom_layout);
 		View.OnTouchListener keyTouchMode = new View.OnTouchListener() {
@@ -77,6 +77,17 @@ public class IMEService extends InputMethodService {
 			}
 		};
 		input = candidates.findViewById(R.id.input);
+
+		initCandidateViews(view);
+		initKeyboardMainViews(view, keyTouchMode);
+		initKeyboardNumViews(view);
+		initBottomViews(view, keyTouchMode);
+
+		setInputView(view);
+		setCandidatesView(candidates);
+	}
+
+	private void initCandidateViews(View view) {
 		candidate = view.findViewById(R.id.candidate);
 		candidate.setOnClickListener(v -> {
 			String text = candidate.getText().toString();
@@ -87,51 +98,9 @@ public class IMEService extends InputMethodService {
 				enterButton.setText("┘");
 			}
 		});
-		alphabetKey = new Button[26];
-		View.OnClickListener alphabetKeyListener = v -> {
-			Button button = (Button) v;
-			String text = button.getText().toString().toLowerCase();
-			input.append(text);
-			updateCandidate();
-			enterButton.setText("×");
-			setCandidatesViewShown(true);
-		};
-		for (int i = 0; i < 26; i++) {
-			char c = (char) ('a' + i);
-			String idName = "key_" + c;
-			int id = UiUtils.getResourcesIdByName(idName);
-			alphabetKey[i] = view.findViewById(id);
-			alphabetKey[i].setOnTouchListener(keyTouchMode);
-			alphabetKey[i].setOnClickListener(alphabetKeyListener);
-		}
-		capslockButton = view.findViewById(R.id.key_capslock);
-		capslockButton.setOnClickListener(v -> {
-			inputMode = inputMode.next();
-			updateCandidate();
-		});
-		deleteButton = view.findViewById(R.id.key_del);
-		deleteButton.setOnTouchListener(keyTouchMode);
-		deleteButton.setOnClickListener(v -> {
-			if (input.getText().length() == 0) {
-				sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-			} else {
-				String text = input.getText().toString();
-				text = text.substring(0, text.length() - 1);
-				input.setText(text);
-				if (text.isEmpty()) {
-					candidate.setText(null);
-					enterButton.setText("┘");
-				} else {
-					updateCandidate();
-				}
-			}
-		});
-		numBackButton = view.findViewById(R.id.key_num_back);
-		numBackButton.setOnClickListener(v -> {
-			// 转为主键盘
-			bottomLayout.setVisibility(View.VISIBLE);
-			keyboardLayout.pop();
-		});
+	}
+
+	private void initBottomViews(View view, View.OnTouchListener keyTouchMode) {
 		numberlockButton = view.findViewById(R.id.key_numlock);
 		numberlockButton.setOnClickListener(v -> {
 			input.setText(null);
@@ -179,9 +148,57 @@ public class IMEService extends InputMethodService {
 			}
 			sendKeyChar('。');
 		});
+	}
 
-		setInputView(view);
-		setCandidatesView(candidates);
+	private void initKeyboardNumViews(View view) {
+		numBackButton = view.findViewById(R.id.key_num_back);
+		numBackButton.setOnClickListener(v -> {
+			// 转为主键盘
+			bottomLayout.setVisibility(View.VISIBLE);
+			keyboardLayout.pop();
+		});
+	}
+
+	private void initKeyboardMainViews(View view, View.OnTouchListener keyTouchMode) {
+		alphabetKey = new Button[26];
+		View.OnClickListener alphabetKeyListener = v -> {
+			Button button = (Button) v;
+			String text = button.getText().toString().toLowerCase();
+			input.append(text);
+			updateCandidate();
+			enterButton.setText("×");
+			setCandidatesViewShown(true);
+		};
+		for (int i = 0; i < 26; i++) {
+			char c = (char) ('a' + i);
+			String idName = "key_" + c;
+			int id = UiUtils.getResourcesIdByName(idName);
+			alphabetKey[i] = view.findViewById(id);
+			alphabetKey[i].setOnTouchListener(keyTouchMode);
+			alphabetKey[i].setOnClickListener(alphabetKeyListener);
+		}
+		capslockButton = view.findViewById(R.id.key_capslock);
+		capslockButton.setOnClickListener(v -> {
+			inputMode = inputMode.next();
+			updateCandidate();
+		});
+		deleteButton = view.findViewById(R.id.key_del);
+		deleteButton.setOnTouchListener(keyTouchMode);
+		deleteButton.setOnClickListener(v -> {
+			if (input.getText().length() == 0) {
+				sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+			} else {
+				String text = input.getText().toString();
+				text = text.substring(0, text.length() - 1);
+				input.setText(text);
+				if (text.isEmpty()) {
+					candidate.setText(null);
+					enterButton.setText("┘");
+				} else {
+					updateCandidate();
+				}
+			}
+		});
 	}
 
 	/**
